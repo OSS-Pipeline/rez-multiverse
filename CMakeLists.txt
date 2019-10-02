@@ -11,7 +11,7 @@ rez_set_archive(
     # we can build, using the following hierarchy:
     # "${REZ_REPO_PAYLOAD_DIR}/project_name/archive.what.ever"
     MULTIVERSE_URL multiverse/Multiverse-${REZ_BUILD_PROJECT_VERSION}-Public-Linux-EL7.tar.gz
-    https://url.to/my/package.tar.gz
+    https://url.to/multiverse/package.tar.gz
 )
 
 # The environment variable REZ_TMP_PATH is meant to point to a location such as "/tmp/rez".
@@ -22,10 +22,12 @@ set(EXTRACT_DIR $ENV{REZ_TMP_PATH}/multiverse/${REZ_BUILD_PROJECT_VERSION})
 # If necessary, it is possible to skip one of these steps by replacing the command
 # by "", an empty string.
 ExternalProject_Add(
-    BUILD_MULTIVERSE
+    REZ_MULTIVERSE
     URL ${MULTIVERSE_URL}
     PREFIX multiverse
     SOURCE_DIR ${EXTRACT_DIR}
+    PATCH_COMMAND ""
+    UPDATE_COMMAND ""
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND bash ${CMAKE_SOURCE_DIR}/install.sh ${EXTRACT_DIR}

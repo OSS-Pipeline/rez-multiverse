@@ -14,22 +14,12 @@ description = \
     """
 
 requires = [
-    "cmake-3",
-    "maya-2017+"
+    "cmake-3+",
+    "maya-2017+<2020"
 ]
 
 variants = [
     ["platform-linux"]
-]
-
-tools = [
-    "i-display",
-    "licserver",
-    "licutils",
-    "nsidepends",
-    "oslc",
-    "renderdl",
-    "tdlmake"
 ]
 
 build_system = "cmake"
@@ -37,8 +27,7 @@ build_system = "cmake"
 with scope("config") as config:
     config.build_thread_count = "logical_cores"
 
-#TODO: Use the SHA1 of the archive instead.
-uuid = "multiverse-5.8.0"
+uuid = "multiverse-{version}".format(version=str(version))
 
 def commands():
     env.PATH.append("{root}/bin")
@@ -48,3 +37,7 @@ def commands():
     env.MAYA_MODULE_PATH.prepend("{root}/Maya")
     env.ARNOLD_PLUGIN_PATH.append("{root}/lib/procedurals/arnold")
     env.USD_PLUG_IN_PATH.append("{root}/lib/plugin/usd")
+
+    # Helper environment variables.
+    env.MULTIVERSE_BINARY_PATH.set("{root}/bin")
+    env.MULTIVERSE_LIBRARY_PATH.set("{root}/lib")
